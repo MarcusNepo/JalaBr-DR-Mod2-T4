@@ -2,11 +2,12 @@ import pygame
 import os
 
 from pygame.sprite import Sprite
-from dino_runner.utils.constants import RUNNING, JUMPING, JUMP_VEL, X_POS, Y_POS, DEFAULT_TYPE, RUNNING_SHIELD 
+from dino_runner.utils.constants import RUNNING, JUMPING, JUMP_VEL, X_POS, Y_POS, DEFAULT_TYPE, DUCKING, Y_POS_DUCK
 
 
 RUN_IMG = {DEFAULT_TYPE: RUNNING}
 JUMP_IMG = {DEFAULT_TYPE: JUMPING}
+DUCK_IMG = {DEFAULT_TYPE: DUCKING}
 
 class Dinosaur(Sprite):
     def __init__(self):
@@ -18,20 +19,29 @@ class Dinosaur(Sprite):
         self.step_index = 0
         self.dino_run = True 
         self.dino_jump = True
+        self.dino_duck = False
         self.jump_vel = JUMP_VEL
 
     def update(self, user_input):
         if self.dino_run:
             self.run()
         if self.dino_jump:
-            self.jump()     
+            self.jump() 
+        if self.dino_duck:
+            self.duck()
 
         if user_input[pygame.K_UP] and not self.dino_jump:
             self.dino_run = False
             self.dino_jump = True
-        elif user_input[pygame.K_DOWN] and not self.dino_jump:
+            self.dino_duck = False
+        elif user_input[pygame.K_DOWN] and not self.dino_duck:
+            self.dino_run = False
+            self.dino_jump = False
+            self.dino_duck = True
+        elif not user_input[pygame.K_DOWN] and self.dino_duck:
             self.dino_run = True
-            self.dino_jump = False     
+            self.dino_jump = False
+            self.dino_duck = False
 
         if self.step_index >= 10:
             self.step_index = 0     
@@ -55,8 +65,13 @@ class Dinosaur(Sprite):
         if self.jump_vel < -JUMP_VEL:
             self.dino_rect.y = Y_POS
             self.dino_jump = False
+            self.dino_run = True
             self.jump_vel = JUMP_VEL
 
     def duck(self):
-        pass
-
+        self.image = DUCK_IMG[self.type][self.step_index // 5]
+        self.dino_rect = self.image.get_rect()
+        self.dino_rect.x = X_POS
+        self.dino_rect.y = Y_POS_DUCK
+        self.step_index += 1
+        self.dino_duck = True
