@@ -2,7 +2,7 @@ import pygame
 import os
 
 from pygame.sprite import Sprite
-from dino_runner.utils.constants import RUNNING, JUMPING, JUMP_VEL, X_POS, Y_POS, DEFAULT_TYPE, DUCKING, Y_POS_DUCK
+from dino_runner.utils.constants import RUNNING, JUMPING, JUMP_VEL, X_POS, Y_POS, DEFAULT_TYPE, DUCKING, Y_DUCK
 
 
 RUN_IMG = {DEFAULT_TYPE: RUNNING}
@@ -18,7 +18,7 @@ class Dinosaur(Sprite):
         self.dino_rect.y = Y_POS
         self.step_index = 0
         self.dino_run = True 
-        self.dino_jump = True
+        self.dino_jump = False
         self.dino_duck = False
         self.jump_vel = JUMP_VEL
 
@@ -72,6 +72,6 @@ class Dinosaur(Sprite):
         self.image = DUCK_IMG[self.type][self.step_index // 5]
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = X_POS
-        self.dino_rect.y = Y_POS_DUCK
+        self.dino_rect.y = Y_DUCK
         self.step_index += 1
         self.dino_duck = True
