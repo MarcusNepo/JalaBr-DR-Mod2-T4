@@ -14,6 +14,7 @@ GAME_SPEED = 20
 X_POS = 80
 Y_POS = 310
 Y_DUCK = 350
+Y_BIRD = 250
 
 # Assets Constants
 ICON = pygame.image.load(os.path.join(IMG_DIR, "DinoWallpaper.png"))
