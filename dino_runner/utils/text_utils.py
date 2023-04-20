@@ -3,8 +3,8 @@ import pygame
 from dino_runner.utils.constants import SCREEN_HEIGHT, SCREEN_WIDTH
 
 FONT_COLOR = (0, 0, 0)
-FONT_SIZE = 22
-FONT_STYLE = "freesansbold.ttf"
+FONT_SIZE = 15
+FONT_STYLE = "dino_runner/assets/PressStart2P-Regular.ttf"
 
 
 def draw_message_component(
